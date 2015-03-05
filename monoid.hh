@@ -79,7 +79,6 @@ class Monoid<List<A>>
     static List<A> append(List<A> x, List<A> y)
     {
       List<A> res;
-      res.reserve(x.size() + y.size());
       res.insert(res.end(), x.begin(), x.end());
       res.insert(res.end(), y.begin(), y.end());
       return res;

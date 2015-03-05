@@ -92,7 +92,7 @@ class Monad<List<A>>
       M<M<B>> bs;
       std::back_insert_iterator<M<M<B>>> bi(bs);
       std::transform(as.begin(), as.end(), bi, f);
-      return concat(bs);
+      return concat<M<A>>(bs);
     }
 };
 
