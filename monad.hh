@@ -23,6 +23,12 @@ class Monad;
 
 // functions
 
+template <typename MA, typename A>
+MA mreturn(A a)
+{
+  return Monad<MA>::mreturn(a);
+}
+
 template <typename MA, typename MB, typename A>
 MB
 operator >>= (MA ma, Function<A, MB> f)
