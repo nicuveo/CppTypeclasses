@@ -59,7 +59,7 @@ class Monad<Vec<A>>
 
     static M<A> mreturn(A a)
     {
-      return M<A>(a);
+      return M<A> { a };
     }
 
     template <typename B>
@@ -83,7 +83,7 @@ class Monad<List<A>>
 
     static M<A> mreturn(A a)
     {
-      return M<A>(a);
+      return M<A> { a };
     }
 
     template <typename B>

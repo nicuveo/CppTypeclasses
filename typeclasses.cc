@@ -37,7 +37,7 @@ Either<String, int> ef3(int x)
 
 int main()
 {
-  Vec<int> va = { 1, 2, 3 };
+  Vec<int> va = mreturn<Vec<int>>(10);
   Maybe<int> ma = 3;
   Maybe<int> mb;
   Either<String, int> ea = 42;
