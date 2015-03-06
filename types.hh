@@ -32,7 +32,7 @@ template <typename A, typename B>
 using Function = std::function<B(A)>;
 
 template <typename A>
-using Endomorphism = Function<A, A>;
+using Endomorphism = Function<A const&, A>;
 
 typedef std::string String;
 
@@ -47,7 +47,7 @@ A id(A x)
 }
 
 template <typename A, typename B, typename C>
-Function<A, C> compose(Function<B, C> f, Function<A, B> g)
+Function<A const&, C> compose(Function<B const&, C> f, Function<A const&, B> g)
 {
   using namespace std::placeholders;
   return std::bind(f, std::bind(g, _1));

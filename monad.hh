@@ -21,22 +21,22 @@ class Monad;
 // functions
 
 template <typename MA, typename A>
-MA mreturn(A a)
+MA mreturn(A const& a)
 {
   return Monad<MA>::mreturn(a);
 }
 
 template <typename MA, typename MB, typename A>
-MB operator >>= (MA ma, Function<A, MB> f)
+MB operator >>= (MA const& ma, Function<A const&, MB> const& f)
 {
   return Monad<MA>::bind(ma, f);
 }
 
 template <typename MA, typename MB>
-MB operator >> (MA ma, MB mb)
+MB operator >> (MA const& ma, MB const& mb)
 {
   typedef typename Monad<MA>::Type A;
-  Function<A, MB> f = [=](A){ return mb; };
+  Function<A const&, MB> f = [=](A const&){ return mb; };
   return ma >>= f;
 }
 
@@ -50,13 +50,14 @@ class Monad<Vec<A>>
   public:
     typedef A Type;
 
-    static Vec<A> mreturn(A a)
+    static Vec<A> mreturn(A const& a)
     {
       return Vec<A> { a };
     }
 
     template <typename B>
-    static Vec<B> bind(Vec<A> as, Function<A, Vec<B>> f)
+    static Vec<B> bind(Vec<A> const& as,
+                       Function<A const&, Vec<B>> const& f)
     {
       Vec<Vec<B>> bs;
       std::back_insert_iterator<Vec<Vec<B>>> bi(bs);
@@ -71,13 +72,14 @@ class Monad<List<A>>
   public:
     typedef A Type;
 
-    static List<A> mreturn(A a)
+    static List<A> mreturn(A const& a)
     {
       return List<A> { a };
     }
 
     template <typename B>
-    static List<B> bind(List<A> as, Function<A, List<B>> f)
+    static List<B> bind(List<A> const& as,
+                        Function<A const&, List<B>> const& f)
     {
       List<List<B>> bs;
       std::back_insert_iterator<List<List<B>>> bi(bs);
@@ -92,13 +94,14 @@ class Monad<Maybe<A>>
   public:
     typedef A Type;
 
-    static Maybe<A> mreturn(A a)
+    static Maybe<A> mreturn(A const& a)
     {
       return Maybe<A>(a);
     }
 
     template <typename B>
-    static Maybe<B> bind(Maybe<A> ma, Function<A, Maybe<B>> f)
+    static Maybe<B> bind(Maybe<A> const& ma,
+                         Function<A const&, Maybe<B>> const& f)
     {
       return ma ? f(*ma) : Maybe<B>();
     }
@@ -110,33 +113,35 @@ class Monad<Either<A, B>>
   public:
     typedef B Type;
 
-    static Either<A, B> mreturn(B b)
+    static Either<A, B> mreturn(B const& b)
     {
       return Either<A, B>(b);
     }
 
     template <typename C>
-    static Either<A, C> bind(Either<A, B> mb, Function<B, Either<A, C>> f)
+    static Either<A, C> bind(Either<A, B> const& mb,
+                             Function<B const&, Either<A, C>> const& f)
     {
-      A* a = boost::get<A>(&mb);
-      B* b = boost::get<B>(&mb);
+      A const* a = boost::get<A>(&mb);
+      B const* b = boost::get<B>(&mb);
       return a ? *a : f(*b);
     }
 };
 
 template <typename A, typename B>
-class Monad<Function<A, B>>
+class Monad<Function<A const&, B>>
 {
   public:
     typedef B Type;
 
-    static Function<A, B> mreturn(B b)
+    static Function<A const&, B> mreturn(B const& b)
     {
-      return [=](A){ return b; };
+      return [=](A const&){ return b; };
     }
 
     template <typename C>
-    static Function<A, C> bind(Function<A, B> mb, Function<B, Function<A, C>> f)
+    static Function<A const&, C> bind(Function<A const&, B> const& mb,
+                                      Function<B const&, Function<A const&, C>> const& f)
     {
       return [=](A a){ return f(mb(a))(a); };
     }

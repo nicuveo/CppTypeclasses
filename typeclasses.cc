@@ -42,10 +42,10 @@ int main()
   Maybe<int> mb;
   Either<String, int> ea = 42;
   Either<String, int> eb = 43;
-  Function<int, int                 > f0 = ef0;
-  Function<int, Vec<int>            > f1 = ef1;
-  Function<int, Maybe<int>          > f2 = ef2;
-  Function<int, Either<String, int> > f3 = ef3;
+  Function<int const&, int                 > f0 = ef0;
+  Function<int const&, Vec<int>            > f1 = ef1;
+  Function<int const&, Maybe<int>          > f2 = ef2;
+  Function<int const&, Either<String, int> > f3 = ef3;
   auto f = fmap(f3, f0);
 
   std::cout << show(fmap(f0, va))       << std::endl

@@ -25,7 +25,7 @@ A empty()
 }
 
 template <typename A>
-A append(A x, A y)
+A append(A const& x, A const& y)
 {
   return Monoid<A>::append(x, y);
 }
@@ -37,7 +37,7 @@ A concat(I b, I e)
 }
 
 template <typename A, typename C>
-A concat(C xs)
+A concat(C const& xs)
 {
   return concat<A>(xs.begin(), xs.end());
 }
@@ -55,7 +55,7 @@ class Monoid<Vec<A>>
       return Vec<A>();
     }
 
-    static Vec<A> append(Vec<A> x, Vec<A> y)
+    static Vec<A> append(Vec<A> const& x, Vec<A> const& y)
     {
       Vec<A> res;
       res.reserve(x.size() + y.size());
@@ -74,7 +74,7 @@ class Monoid<List<A>>
       return List<A>();
     }
 
-    static List<A> append(List<A> x, List<A> y)
+    static List<A> append(List<A> const& x, List<A> const& y)
     {
       List<A> res;
       res.insert(res.end(), x.begin(), x.end());
@@ -92,7 +92,7 @@ class Monoid<Map<A, B>>
       return Map<A, B>();
     }
 
-    static Map<A, B> append(Map<A, B> x, Map<A, B> y)
+    static Map<A, B> append(Map<A, B> const& x, Map<A, B> const& y)
     {
       Map<A, B> res;
       res.insert(x.begin(), x.end());
@@ -110,7 +110,7 @@ class Monoid<Endomorphism<A>>
       return id;
     }
 
-    static Endomorphism<A> append(Endomorphism<A> f, Endomorphism<A> g)
+    static Endomorphism<A> append(Endomorphism<A> const& f, Endomorphism<A> const& g)
     {
       return compose(f, g);
     }
@@ -125,7 +125,7 @@ class Monoid<String>
       return String();
     }
 
-    static String append(String a, String b)
+    static String append(String const& a, String const& b)
     {
       return a + b;
     }
