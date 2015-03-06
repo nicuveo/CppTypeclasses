@@ -10,9 +10,7 @@ an existing type without modifying it, while a class has to explicitly
 declare which interfaces it implements (except in Go, AFAIK).
 
 This repository is an experiment: trying to come up with a working way
-to have Haskell-like typeclasses in C++. It... works. Error reporting is
-ugly, though. Different classes use different strategies in order to see
-what yields the best error messages. Not sure yet.
+to have Haskell-like typeclasses in C++. It... kinda works.
 
 Of course, don't use that in real life.
 
