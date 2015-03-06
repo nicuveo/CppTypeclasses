@@ -9,12 +9,10 @@
 // class
 
 template <typename A>
-class Monoid
-{
-  public:
-    static A empty();
-    static A append(A, A);
-};
+class Monoid;
+
+// static A empty();
+// static A append(A, A);
 
 
 
@@ -115,12 +113,6 @@ class Monoid<Endomorphism<A>>
     static Endomorphism<A> append(Endomorphism<A> f, Endomorphism<A> g)
     {
       return compose(f, g);
-    }
-
-  private:
-    static A id(A x)
-    {
-      return x;
     }
 };
 

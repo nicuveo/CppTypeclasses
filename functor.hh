@@ -9,15 +9,10 @@
 // class
 
 template <typename FA>
-class Functor
-{
-  public:
-//    template <typename B>
-//    using F = ...;
-//
-//    template <typename B>
-//    F<B> fmap(Fun<B>, FA);
-};
+class Functor;
+
+// template <typename B> using F = ...;
+// template <typename B> static F<B> fmap(Fun<B>, FA);
 
 
 

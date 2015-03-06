@@ -40,6 +40,12 @@ typedef std::string String;
 
 // functions
 
+template <typename A>
+A id(A x)
+{
+  return x;
+}
+
 template <typename A, typename B, typename C>
 Function<A, C> compose(Function<B, C> f, Function<A, B> g)
 {

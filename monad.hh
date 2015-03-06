@@ -10,14 +10,11 @@
 
 template <typename MA>
 class Monad;
-//    typedef A Type;
-//
-//    template <typename B>
-//    using M = ...;
-//
-//    template <typename B>
-//    M<B> bind(M<A>, Function<A, M<B>>);
-//    M<A> mreturn(A);
+
+// typedef A Type;
+// M<A> mreturn(A);
+// template <typename B> using M = ...;
+// template <typename B> static M<B> bind(M<A>, Function<A, M<B>>);
 
 
 
