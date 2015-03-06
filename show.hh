@@ -24,7 +24,7 @@ class Show
 // functions
 
 template <typename A>
-String show(A const& x)
+inline String show(A const& x)
 {
   return Show<A>::show(x);
 }

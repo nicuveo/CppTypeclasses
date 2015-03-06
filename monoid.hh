@@ -19,25 +19,25 @@ class Monoid;
 // functions
 
 template <typename A>
-A empty()
+inline A empty()
 {
   return Monoid<A>::empty();
 }
 
 template <typename A>
-A append(A const& x, A const& y)
+inline A append(A const& x, A const& y)
 {
   return Monoid<A>::append(x, y);
 }
 
 template <typename A, typename I>
-A concat(I b, I e)
+inline A concat(I b, I e)
 {
   return std::accumulate(b, e, empty<A>(), append<A>);
 }
 
 template <typename A, typename C>
-A concat(C const& xs)
+inline A concat(C const& xs)
 {
   return concat<A>(xs.begin(), xs.end());
 }

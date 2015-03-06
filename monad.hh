@@ -21,19 +21,19 @@ class Monad;
 // functions
 
 template <typename MA, typename A>
-MA mreturn(A const& a)
+inline MA mreturn(A const& a)
 {
   return Monad<MA>::mreturn(a);
 }
 
 template <typename MA, typename MB, typename A>
-MB operator >>= (MA const& ma, Function<A const&, MB> const& f)
+inline MB operator >>= (MA const& ma, Function<A const&, MB> const& f)
 {
   return Monad<MA>::bind(ma, f);
 }
 
 template <typename MA, typename MB>
-MB operator >> (MA const& ma, MB const& mb)
+inline MB operator >> (MA const& ma, MB const& mb)
 {
   typedef typename Monad<MA>::Type A;
   Function<A const&, MB> f = [=](A const&){ return mb; };

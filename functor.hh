@@ -19,7 +19,7 @@ class Functor;
 // functions
 
 template <typename FA, typename A, typename B>
-typename Functor<FA>::template F<B>
+inline typename Functor<FA>::template F<B>
 fmap(Function<A const&, B> const& f, FA const& fa)
 {
   return Functor<FA>::template fmap<B>(f, fa);
