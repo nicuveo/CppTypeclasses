@@ -30,8 +30,7 @@ MA mreturn(A a)
 }
 
 template <typename MA, typename MB, typename A>
-MB
-operator >>= (MA ma, Function<A, MB> f)
+MB operator >>= (MA ma, Function<A, MB> f)
 {
   return Monad<MA>::bind(ma, f);
 }
