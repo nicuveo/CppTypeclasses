@@ -33,6 +33,16 @@ String show(A const& x)
 
 // instances
 
+template <>
+class Show<String>
+{
+  public:
+  static String show(String const& s)
+  {
+    return '"' + s + '"';
+  }
+};
+
 template <typename A>
 class Show<Vec<A>>
 {
