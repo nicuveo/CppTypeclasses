@@ -38,6 +38,7 @@ Either<String, int> ef3(int x)
 int main()
 {
   Vec<int> va = mreturn<Vec<int>>(10);
+  Vec<int> vb = Vec<int> { 1, 2, 3, 4 };
   Maybe<int> ma = 3;
   Maybe<int> mb;
   Either<String, int> ea = 42;
@@ -52,6 +53,7 @@ int main()
             << show(fmap(f0, ma))       << std::endl
             << show(fmap(f0, mb))       << std::endl
             << show(ma >> mb)           << std::endl
+            << show(vb >> va)           << std::endl
             << show(ea >>= f3)          << std::endl
             << show(eb >>= f3)          << std::endl
             << show((ma >>= f2) >>= f2) << std::endl
