@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "monoid.hh"
+#include "types.hh"
 
 
 
@@ -59,11 +59,12 @@ class Monad<Vec<A>>
     static Vec<B> bind(Vec<A> const& as,
                        Function<A const&, Vec<B>> const& f)
     {
-      Vec<Vec<B>> bs;
+      Vec<B> bs;
       bs.reserve(as.size());
-      std::back_insert_iterator<Vec<Vec<B>>> bi(bs);
-      std::transform(as.begin(), as.end(), bi, f);
-      return concat<Vec<A>>(bs);
+      for (auto const& a : as)
+        for (auto const& b : f(a))
+          bs.push_back(b);
+      return bs;
     }
 };
 
@@ -82,10 +83,11 @@ class Monad<List<A>>
     static List<B> bind(List<A> const& as,
                         Function<A const&, List<B>> const& f)
     {
-      List<List<B>> bs;
-      std::back_insert_iterator<List<List<B>>> bi(bs);
-      std::transform(as.begin(), as.end(), bi, f);
-      return concat<List<A>>(bs);
+      List<B> bs;
+      for (auto const& a : as)
+        for (auto const& b : f(a))
+          bs.push_back(b);
+      return bs;
     }
 };
 
