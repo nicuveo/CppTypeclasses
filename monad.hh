@@ -60,6 +60,7 @@ class Monad<Vec<A>>
                        Function<A const&, Vec<B>> const& f)
     {
       Vec<Vec<B>> bs;
+      bs.reserve(as.size());
       std::back_insert_iterator<Vec<Vec<B>>> bi(bs);
       std::transform(as.begin(), as.end(), bi, f);
       return concat<Vec<A>>(bs);

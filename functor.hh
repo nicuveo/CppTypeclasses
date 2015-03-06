@@ -40,6 +40,7 @@ class Functor<Vec<A>>
     static Vec<B> fmap(Function<A const&, B> const& f, Vec<A> const& as)
     {
       Vec<B> bs;
+      bs.reserve(as.size());
       std::back_insert_iterator<Vec<B>> bi(bs);
       std::transform(as.begin(), as.end(), bi, f);
       return bs;
