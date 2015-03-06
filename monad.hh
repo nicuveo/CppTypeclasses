@@ -53,21 +53,18 @@ class Monad<Vec<A>>
   public:
     typedef A Type;
 
-    template <typename B>
-    using M = Vec<B>;
-
-    static M<A> mreturn(A a)
+    static Vec<A> mreturn(A a)
     {
-      return M<A> { a };
+      return Vec<A> { a };
     }
 
     template <typename B>
-    static M<B> bind(Vec<A> as, Function<A, M<B>> f)
+    static Vec<B> bind(Vec<A> as, Function<A, Vec<B>> f)
     {
-      M<M<B>> bs;
-      std::back_insert_iterator<M<M<B>>> bi(bs);
+      Vec<Vec<B>> bs;
+      std::back_insert_iterator<Vec<Vec<B>>> bi(bs);
       std::transform(as.begin(), as.end(), bi, f);
-      return concat<M<A>>(bs);
+      return concat<Vec<A>>(bs);
     }
 };
 
@@ -77,21 +74,18 @@ class Monad<List<A>>
   public:
     typedef A Type;
 
-    template <typename B>
-    using M = List<B>;
-
-    static M<A> mreturn(A a)
+    static List<A> mreturn(A a)
     {
-      return M<A> { a };
+      return List<A> { a };
     }
 
     template <typename B>
-    static M<B> bind(M<A> as, Function<A, M<B>> f)
+    static List<B> bind(List<A> as, Function<A, List<B>> f)
     {
-      M<M<B>> bs;
-      std::back_insert_iterator<M<M<B>>> bi(bs);
+      List<List<B>> bs;
+      std::back_insert_iterator<List<List<B>>> bi(bs);
       std::transform(as.begin(), as.end(), bi, f);
-      return concat<M<A>>(bs);
+      return concat<List<A>>(bs);
     }
 };
 
@@ -101,18 +95,15 @@ class Monad<Maybe<A>>
   public:
     typedef A Type;
 
-    template <typename B>
-    using M = Maybe<B>;
-
-    static M<A> mreturn(A a)
+    static Maybe<A> mreturn(A a)
     {
-      return M<A>(a);
+      return Maybe<A>(a);
     }
 
     template <typename B>
-    static M<B> bind(M<A> ma, Function<A, M<B>> f)
+    static Maybe<B> bind(Maybe<A> ma, Function<A, Maybe<B>> f)
     {
-      return ma ? f(*ma) : M<B>();
+      return ma ? f(*ma) : Maybe<B>();
     }
 };
 
@@ -122,16 +113,13 @@ class Monad<Either<A, B>>
   public:
     typedef B Type;
 
-    template <typename C>
-    using M = Either<A, C>;
-
-    static M<B> mreturn(B b)
+    static Either<A, B> mreturn(B b)
     {
-      return M<B>(b);
+      return Either<A, B>(b);
     }
 
     template <typename C>
-    static M<C> bind(M<B> mb, Function<B, M<C>> f)
+    static Either<A, C> bind(Either<A, B> mb, Function<B, Either<A, C>> f)
     {
       A* a = boost::get<A>(&mb);
       B* b = boost::get<B>(&mb);
@@ -145,16 +133,13 @@ class Monad<Function<A, B>>
   public:
     typedef B Type;
 
-    template <typename C>
-    using M = Function<A, C>;
-
-    static M<B> mreturn(B b)
+    static Function<A, B> mreturn(B b)
     {
       return [=](A){ return b; };
     }
 
     template <typename C>
-    static M<C> bind(M<B> mb, Function<B, M<C>> f)
+    static Function<A, C> bind(Function<A, B> mb, Function<B, Function<A, C>> f)
     {
       return [=](A a){ return f(mb(a))(a); };
     }
